@@ -1,0 +1,85 @@
+//#include <iostream>
+#include <stdio.h>
+#include <GL/glut.h>
+//#inlcude "Turtle.h"
+#include "Drawings.h"
+#include "Turtle.h"
+
+#define SIZE 500  /* the size, in pixels, of the square window to open, YOU CAN CHANGE THIS */
+
+int Ex = 0;
+
+void init(void)
+{
+	/*
+	initialize viewing values */
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0.0,500.0,0.0,500.0);
+	//glOrtho(0.0, 500.0, 0.0, 0.0, 500.0, 0.0);
+}
+
+
+//GLUT display callback
+void display( void )
+{
+  
+   switch(Ex)
+   {
+     case 0:
+       ClearScreen();
+       Square();
+       break;
+
+     case 1:
+       ClearScreen();
+       Original1();
+       break;
+     case 2:
+       ClearScreen();
+       Original2();
+       break;
+
+     case 3:
+       ClearScreen();
+       Example();
+       break;
+
+   }
+ }
+
+
+//GLUT callback to handle keyboard events
+void keyboard( unsigned char key, int x, int y ) 
+{
+   // Everytime a key is pressed increase Example
+   
+switch(key)
+{
+case 27:
+	exit(1);
+	break;
+default:
+	Ex=(Ex+1)%4;
+       glutPostRedisplay();
+	break;
+}
+}
+
+void main (int argc, char **argv)
+{
+  glutInit( &argc, argv );
+  glutInitDisplayMode( GLUT_RGB | GLUT_SINGLE );
+  glutInitWindowSize (SIZE, SIZE);
+  glutInitWindowPosition (50, 100);
+  glutCreateWindow ("Turtle Graphics");
+
+  init();
+  //Register the GLUT callbacks
+  glutDisplayFunc( display );
+  glutKeyboardFunc( keyboard );
+ 
+  glutMainLoop();
+}
+
+
